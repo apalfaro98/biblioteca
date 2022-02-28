@@ -3,20 +3,20 @@ import Admin, { Admin as AdminInterface } from '../schemas/admin.schema';
 
 
 
-const agregar =  async (req: Request, res: Response) => {
+// const agregar =  async (req: Request, res: Response) => {
 
-    const { usuario, password } = req.body as AdminInterface;
-    // insertar admin base de datos
-    const admin = new Admin({ usuario, password });
-    await admin.save();
+//     const { usuario, password } = req.body as AdminInterface;
+//     // insertar admin base de datos
+//     const admin = new Admin({ usuario, password });
+//     await admin.save();
     
-    res.json({
-        ok: true,
-        sms: 'Admin agregado',
-        admin
-    })            
+//     res.json({
+//         ok: true,
+//         sms: 'Admin agregado',
+//         admin
+//     })            
 
-}
+// }
 
 const login =  async (req: Request, res: Response) => {
 
@@ -44,4 +44,4 @@ const login =  async (req: Request, res: Response) => {
 
 
 
-export  { agregar, login }
+export  { login }
