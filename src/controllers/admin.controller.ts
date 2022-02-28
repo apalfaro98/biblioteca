@@ -25,7 +25,7 @@ const login =  async (req: Request, res: Response) => {
     if(!existeAdmin){
         return res.status(400).json({
             ok: false,
-            sms: `No existe el usuario: ${ usuario }`,
+            sms: `No existe el admin: ${ usuario }`,
         })
     }
 
@@ -38,7 +38,7 @@ const login =  async (req: Request, res: Response) => {
 
     return res.json({
         ok: true,
-        existeAdmin
+        admin: existeAdmin
     })
 }
 

@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "copiarPublic": "copyfiles --up 1 src/public/* dist",
-    "build": "tsc && npm run copiarPublic"
+    "cpHtml": "copyfiles --up 1 src/public/* dist",
+    "cpCss": "copyfiles --up 1 src/public/css/* dist",
+    "cpJs": "copyfiles --up 1 src/public/js/* dist",
+    "cpImg": "copyfiles --up 1 src/public/img/* dist",
+    "build": "tsc && npm run cpHtml && npm run cpCss && npm run cpJs && npm run cpImg",
+    "dev": "nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",
