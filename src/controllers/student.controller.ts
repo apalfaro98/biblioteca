@@ -4,7 +4,7 @@ import { Student } from "../schemas/estudiante.schema";
 import Estudiante from "../schemas/estudiante.schema";
 
 
-const loginStudent = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
 
 
     const {
@@ -13,8 +13,10 @@ const loginStudent = async (req: Request, res: Response) => {
         email,
         carrera,
         libros,
-        anio
+        anio,
+        carnet,
     } = req.body as Student
+
 
     const estudiante = new Estudiante({
         nombre,
@@ -22,14 +24,32 @@ const loginStudent = async (req: Request, res: Response) => {
         email,
         carrera,
         libros,
-        anio
+        anio,
+        carnet,
     });
+
+    const existe = await Estudiante.findOne({
+        $or: [
+            { email },
+            { carnet },
+        ]
+    });
+    if(existe){
+        return res.status(400).json({
+            ok: false,
+            sms: `El correo: ${ email } ya existe o carnet: ${ carnet }`,
+            existe
+        })
+    }
     
+
+
     await estudiante.save();
 
-    res.json({
+    res.json({  
         ok: true,
-       estudiante
+        sms: 'Agregado correctamente',
+        estudiante
         
     })
 
@@ -39,5 +59,5 @@ const loginStudent = async (req: Request, res: Response) => {
 
 
 export {
-    loginStudent
+    login
 }

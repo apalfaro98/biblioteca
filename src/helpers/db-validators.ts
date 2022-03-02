@@ -10,8 +10,6 @@ const existeAdmin = async (usuario: string) => {
     
 }
 
-
-
 export {
-    existeAdmin
+    existeAdmin,
 }

@@ -6,9 +6,10 @@ export interface Student{
     nombre: string;
     apellido: string;
     carrera: string;
-    libros: number;
+    libros: string[];
     anio: number;
     email: string;
+    carnet: number;
     
 
 }
@@ -24,6 +25,11 @@ const studentSchema = new Schema<Student>({
         type: String,
         required: [true, 'El apellido es obligatorio']
     },
+    carnet: {
+        type: Number,
+        required: [true, 'El carnet es obligatorio'],
+        unique: true
+    },
     email: {
         type: String,
         required: [true, 'El correo es obligatorio'],
@@ -32,16 +38,14 @@ const studentSchema = new Schema<Student>({
     carrera: {
         type: String,
         required: true,
-        enum: ['Matematica', 'Fisica', 'Cibernetica']
     },
     libros: {
-        type: Number,
-        default: 1
+        type: [],
+        default: []
     },
     anio: {
         type: Number,
         required: true,
-        enum: [1, 2, 3, 4, 5]
     }
 
 
