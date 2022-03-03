@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Admin, { Admin as AdminInterface } from '../schemas/admin.schema';
 import Books, { Book } from '../schemas/books.schemas';
+import Estudiante from '../schemas/estudiante.schema';
 
 
 // const agregar =  async (req: Request, res: Response) => {
@@ -87,5 +88,38 @@ const add_book = async (req: Request, res: Response) => {
 
 }
 
+const showStudents =  async (req: Request, res: Response) => {
 
-export  { login, add_book }
+    const [ total, estudiantes ] = await Promise.all([
+        Estudiante.countDocuments(),
+        Estudiante.find(),
+    ]);
+    
+    res.json({
+        ok: true,
+        total,
+        estudiantes
+    })
+}
+
+const showBooks = async (req: Request, res: Response) => {
+
+    const [ total, books ] = await Promise.all([
+        Books.countDocuments(),
+        Books.find(),
+    ]);
+    
+    res.json({
+        ok: true,
+        total,
+        books
+    })
+
+}
+
+export  { 
+    login, 
+    add_book, 
+    showStudents,
+    showBooks,
+}
