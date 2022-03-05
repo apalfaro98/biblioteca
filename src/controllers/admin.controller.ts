@@ -4,21 +4,6 @@ import Books, { Book } from '../schemas/books.schemas';
 import Estudiante from '../schemas/estudiante.schema';
 
 
-// const agregar =  async (req: Request, res: Response) => {
-
-//     const { usuario, password } = req.body as AdminInterface;
-//     // insertar admin base de datos
-//     const admin = new Admin({ usuario, password });
-//     await admin.save();
-    
-//     res.json({
-//         ok: true,
-//         sms: 'Admin agregado',
-//         admin
-//     })            
-
-// }
-// Resgistro del admin
 const login =  async (req: Request, res: Response) => {
 
     const { usuario, password } = req.body as AdminInterface;
@@ -117,9 +102,81 @@ const showBooks = async (req: Request, res: Response) => {
 
 }
 
+const pedirBook = async (req: Request, res: Response) => {
+
+    const { titulo = '', email = '' } = req.body;
+
+    const [book, estudiante] = await Promise.all([
+        Books.findOne({ titulo }),
+        Estudiante.findOne({ email })
+    ])
+
+
+    if( !book ) return res.status(400).json({
+        ok: false,
+        sms: `No existe el libro: ${ titulo }`
+    });
+    if( book.disponible == 0 ) return res.status(400).json({
+        ok: false,
+        sms: `Libro: ${ titulo } no tiene disponibles`
+    })
+    if( !estudiante ) return res.status(400).json({
+        ok: false,
+        sms: `No existe estudiante con email: ${ email }`
+    });
+    if(estudiante.libros.includes(titulo)) return res.status(400).json({
+        ok: false,
+        sms: `El estudiante: ${ estudiante.nombre }, ya tiene el libro: ${ titulo }`
+    })
+
+    estudiante.libros.push(titulo);
+
+    await Promise.all([
+        Books.findOneAndUpdate({ titulo },{ disponible: book.disponible - 1 }),
+        Estudiante.findOneAndUpdate({ email }, estudiante)
+    ])
+
+    res.json({
+        ok: true,
+        sms: 'Prestamo realizado correctamente'
+    })
+}
+
+const returnBook = async (req: Request, res: Response) => {
+
+    const { titulo = '', email = '' } = req.body;
+
+    const [book, estudiante] = await Promise.all([
+        Books.findOne({ titulo }),
+        Estudiante.findOne({ email })
+    ])
+    
+    if( !estudiante ) return res.status(400).json({
+        ok: false,
+        sms: `No existe estudiante con email: ${ email }`
+    });
+    if(!estudiante.libros.includes(titulo)) return res.status(400).json({
+        ok: false,
+        sms: `El estudiante ${ estudiante.nombre } no tiene el libro: ${ titulo }`
+    })
+
+    await Promise.all([
+        Books.findOneAndUpdate({ titulo },{ disponible: book?.disponible || 0 + 1 }),
+        Estudiante.findOneAndUpdate({ email }, { libros: estudiante.libros.filter(b => b != titulo)})
+    ])
+
+    res.json({
+        ok: true,
+        sms: 'Devolucion realizado correctamente'
+    })
+
+}
+
 export  { 
     login, 
     add_book, 
     showStudents,
     showBooks,
+    pedirBook,
+    returnBook
 }
