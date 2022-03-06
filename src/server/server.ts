@@ -27,8 +27,8 @@ export default class Server {
     private middlewares(){
 
         this.app.use(cors());
-        this.app.use(history());
         this.app.use(express.json())
+        this.app.use(history());
         this.app.use(express.static(
             path.resolve(__dirname,'../public')
         ));
