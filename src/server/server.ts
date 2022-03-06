@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { Application } from "express";
 import path from 'path';
 import { dbConnection } from "../database/config";
+import history from "connect-history-api-fallback";
 
 import { router as routerAdmin } from "../router/admin.router";
 import { router as routerStudent } from "../router/students.router";
@@ -26,6 +27,7 @@ export default class Server {
     private middlewares(){
 
         this.app.use(cors());
+        this.app.use(history());
         this.app.use(express.json())
         this.app.use(express.static(
             path.resolve(__dirname,'../public')
