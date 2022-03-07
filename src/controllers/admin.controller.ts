@@ -154,8 +154,6 @@ const returnBook = async (req: Request, res: Response) => {
         ok: false,
         sms: `No existe el libro: ${ titulo }`
     })
-
-
     if( !estudiante ) return res.status(400).json({
         ok: false,
         sms: `No existe estudiante con email: ${ email }`
