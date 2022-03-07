@@ -39,7 +39,7 @@ const add_book = async (req: Request, res: Response) => {
 
     
     // verificar si existe
-    const query = { titulo: titulo.toLowerCase() };
+    const query = { titulo: titulo };
     const existeBook = await Books.findOne(query);
     // si existe agregarlo a la cantidad
     if(existeBook){
@@ -56,7 +56,7 @@ const add_book = async (req: Request, res: Response) => {
        })
     }
     const book = new Books({
-        titulo: titulo.toLowerCase(),
+        titulo: titulo,
         cantidad,
         disponible: cantidad,
         categoria,
