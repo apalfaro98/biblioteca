@@ -28,7 +28,6 @@ export default class Server {
 
         this.app.use(cors());
         this.app.use(express.json())
-        this.app.use(history());
         this.app.use(express.static(
             path.resolve(__dirname,'../public')
         ));

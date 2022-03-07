@@ -1,7 +1,5 @@
 import { Router } from "express"
-import { check } from "express-validator";
 import { add_book, login, pedirBook, returnBook, showBooks, showStudents } from "../controllers/admin.controller";
-import { validarCampos } from "../middlewares/validar-campos";
 
 export const router = Router();
 

@@ -150,7 +150,12 @@ const returnBook = async (req: Request, res: Response) => {
         Books.findOne({ titulo }),
         Estudiante.findOne({ email })
     ])
-    
+    if(!book) return res.status(400).json({
+        ok: false,
+        sms: `No existe el libro: ${ titulo }`
+    })
+
+
     if( !estudiante ) return res.status(400).json({
         ok: false,
         sms: `No existe estudiante con email: ${ email }`
@@ -161,7 +166,7 @@ const returnBook = async (req: Request, res: Response) => {
     })
 
     await Promise.all([
-        Books.findOneAndUpdate({ titulo },{ disponible: book?.disponible || 0 + 1 }),
+        Books.findOneAndUpdate({ titulo },{ disponible: book.disponible + 1 }),
         Estudiante.findOneAndUpdate({ email }, { libros: estudiante.libros.filter(b => b != titulo)})
     ])
 
