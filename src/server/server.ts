@@ -5,6 +5,7 @@ import { dbConnection } from "../database/config";
 
 import { router as routerAdmin } from "../router/admin.router";
 import { router as routerStudent } from "../router/students.router";
+import history from 'connect-history-api-fallback';
 
 export default class Server {
 
@@ -26,7 +27,7 @@ export default class Server {
     private middlewares(){
 
         this.app.use(cors());
-        this.app.use(history({
+        this.app.use(history ({
             rewrites: [
               {
                 from: /^\/api\/.*$/,
