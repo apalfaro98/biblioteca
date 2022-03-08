@@ -44,6 +44,7 @@ export default class Server {
 
     }
 
+    
     private async dataBaseConect(){
 
         await dbConnection();

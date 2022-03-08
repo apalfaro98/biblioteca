@@ -175,11 +175,57 @@ const returnBook = async (req: Request, res: Response) => {
 
 }
 
+const deleteBook = async (req: Request, res: Response) => {
+
+    const { titulo , cantidad } = req.body;
+    
+    const book = await Books.findOne({ titulo });
+
+    if( !book ) return res.status(400).json({
+        ok: false,
+        sms: `No existe el libro: ${ titulo }`
+    });
+    if( book.disponible < cantidad ) return res.status(400).json({
+        ok: false,
+        sms: 'No puedes dar baja a mas libros de los que tienes disponibles'
+    });
+
+    const query = { disponible: book.disponible - cantidad, cantidad: book.cantidad - cantidad} as Book;
+    await Books.findOneAndUpdate({titulo}, query);
+    res.json({
+        ok: true,
+        sms: `libro eliminados correctamentes`
+    })
+
+    
+
+}
+
+const deleteStudent = async (req: Request, res: Response) => {
+
+    const { email } = req.body; 
+
+    const estudiante = await Estudiante.findOne({ email });
+    if(!estudiante) return res.status(400).json({
+        ok: false,
+        sms: `No existe estudiante con correo: ${ email }`
+    })
+    if(estudiante.libros.length > 0) return res.status(400).json({
+        ok: false,
+        sms: `El estudiante ${ estudiante.nombre } tiene aun libros prestados.`
+    })
+    const resp = await Estudiante.findOneAndDelete({ email });
+    res.json({resp})
+
+}
+
 export  { 
     login, 
     add_book, 
     showStudents,
     showBooks,
     pedirBook,
-    returnBook
+    returnBook,
+    deleteBook,
+    deleteStudent
 }
