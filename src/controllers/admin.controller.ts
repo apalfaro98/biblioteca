@@ -215,7 +215,10 @@ const deleteStudent = async (req: Request, res: Response) => {
         sms: `El estudiante ${ estudiante.nombre } tiene aun libros prestados.`
     })
     const resp = await Estudiante.findOneAndDelete({ email });
-    res.json({resp})
+    res.json({
+        ok: true,
+        sms: `estudiante eliminado correctamente`
+    })
 
 }
 
