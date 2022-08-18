@@ -7,7 +7,7 @@ const dbConnection = async() => {
    try {
        
         await mongoose.connect('mongodb+srv://apalfaro98:Ampa*980302@cluster0.fm9hqy3.mongodb.net/test');
-        console.log('Base de datos offline');
+        console.log('Base de datos online');
         
    } catch (error) {
        throw new Error('Erro en al conectar db');

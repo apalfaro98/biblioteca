@@ -3,5 +3,5 @@ import Server from "./server/server";
 
 
 
-const server = new Server(8000);
+const server = new Server(80);
 server.startServer();
