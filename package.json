@@ -11,7 +11,8 @@
     "cpImg": "copyfiles --up 1 src/public/img/* dist",
     "cpFonts": "copyfiles --up 1 src/public/fonts/* dist",
     "build": "tsc && npm run cpHtml && npm run cpCss && npm run cpJs && npm run cpImg && npm run cpFonts",
-    "dev": "nodemon dist/index.js"
+    "dev": "nodemon dist/index.js",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
