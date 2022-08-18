@@ -6,7 +6,7 @@ const dbConnection = async() => {
 
    try {
        
-        await mongoose.connect('mongodb://localhost:27017/biblioteca');
+        await mongoose.connect('mongodb+srv://apalfaro98:Ampa*980302@cluster0.fm9hqy3.mongodb.net/test');
         console.log('Base de datos offline');
         
    } catch (error) {
