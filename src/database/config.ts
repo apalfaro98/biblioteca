@@ -6,7 +6,7 @@ const dbConnection = async() => {
 
    try {
        
-        await mongoose.connect('mongodb+srv://apalfaro98:Ampa*980302@cluster0.fm9hqy3.mongodb.net/test');
+        await mongoose.connect(process.env.MONGO!);
         console.log('Base de datos online');
         
    } catch (error) {
